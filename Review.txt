@@ -1,0 +1,16 @@
+dynerav@gmail.com
+
+Для сохранения логов не нужно такие открытые permission:
+     "Action": [
+                "logs:*"
+            ],
+Хватило бы всего:
+              "Action": [
+                  "logs:CreateLogGroup",
+                  "logs:CreateLogStream",
+                  "logs:PutLogEvents"
+              ],
+Есть переменная TagName но TagValue захардкоден ["true"] и не переменная.
+IAM Policy ты сделал Inline, а не Managed как требовалось.
+
+Остальное вроде гуд, работает.

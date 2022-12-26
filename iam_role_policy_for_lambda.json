@@ -2,28 +2,26 @@
     "Version": "2012-10-17",
     "Statement": [
         {
+            "Sid": "LoggingPermissions",
             "Effect": "Allow",
             "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": "arn:aws:logs:*:*:*"
+            "Resource": [
+                "arn:aws:logs:*:*:*"
+            ]
         },
         {
-            "Effect": "Allow",
-            "Action": "ec2:Describe*",
-            "Resource": "*"
-        },
-        {
+            "Sid": "WorkPermissions",
             "Effect": "Allow",
             "Action": [
-                "ec2:Start*",
-                "ec2:Stop*"
+                "ec2:DescribeInstances",
+                "ec2:StopInstances",
+                "ec2:StartInstances"
             ],
-            "Resource": [
-                "*"
-            ]
+            "Resource": "*"
         }
     ]
 }

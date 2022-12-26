@@ -56,16 +56,15 @@ resource "aws_iam_role" "iam_role_for_lambda" {
     assume_role_policy  = "${file("iam_role_for_lambda.json")}"
 }
 
-# resource "aws_iam_role_policy" "iam_role_policy_for_lambda"{
-#     name    = "iam_role_policy_for_lambda"
-#     role    = aws_iam_role.iam_role_for_lambda.id
-#     policy  = "${file("iam_role_policy_for_lambda.json")}"
-# }
+resource "aws_iam_policy" "iam_policy_for_lambda" {
+  name   = "iam_policy_for_lambda"
+  policy = "${file("iam_role_policy_for_lambda.json")}"
+}
 
 resource "aws_iam_policy_attachment" "iam_policy_attachment" {
     name       = "iam_policy_attachment"
     roles      = [aws_iam_role.iam_role_for_lambda.name]
-    policy_arn = "arn:aws:iam::aws:policy/AWSConnector"
+    policy_arn = aws_iam_policy.iam_policy_for_lambda.arn
 }
 
 resource "aws_lambda_function" "lambda_for_stop_instances" {
@@ -79,7 +78,8 @@ resource "aws_lambda_function" "lambda_for_stop_instances" {
     environment {
         variables = {
             aws_region  = "${var.aws_region}",
-            tag_name    = "${var.tag_name}"
+            tag_name    = "${var.tag_name}",
+            tag_value    = "${var.tag_value}"
         }
     }
 }
@@ -95,7 +95,8 @@ resource "aws_lambda_function" "lambda_for_start_instances" {
     environment {
         variables = {
             aws_region  = "${var.aws_region}",
-            tag_name    = "${var.tag_name}"
+            tag_name    = "${var.tag_name}",
+            tag_value    = "${var.tag_value}"
         }
     }
 }

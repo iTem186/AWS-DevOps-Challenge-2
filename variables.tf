@@ -5,9 +5,15 @@ variable "aws_region" {
 }
 
 variable "tag_name" {
-    description = "Value of the tag for the EC2 instance that should be scheduled"
+    description = "Name of the tag for the EC2 instance that should be scheduled"
     type        = string
     default     = "schedule required"
+}
+
+variable "tag_value" {
+    description = "Value of the tag for the EC2 instance that should be scheduled"
+    type        = string
+    default     = "true"
 }
 
 variable "stop_time" {
